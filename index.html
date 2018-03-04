@@ -1,0 +1,128 @@
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+</head>
+<body>
+	<link rel="stylesheet" type="text/css" href="style.css">
+
+	<img src="titlePic.jpg", width=100%, height="500">
+	<h1>{{welcomeMessage}}</h1>
+	<ul>
+		{{#each messages}}
+			<li>{{this.name}}: {this.message}}</li>
+		{{/each}}
+	</ul>
+	<form action='message'>
+		Longitude:
+		<input type='text' id='long' Longitude='longitude'> <br>
+		Latitude:
+		<input type='text' id='lat'   Latitude='latitude'>
+		</input> <br>
+
+		
+		<!--<input type='submit' value='Submit'>-->
+	</form>
+	<button onclick="sendData()">Track</button>
+</body>
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Geolocation</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 75%
+	
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 75%;
+		width: 75%;
+        margin: 0;
+        padding: 100;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+      // Note: This example requires that you consent to location sharing when
+      // prompted by your browser. If you see the error "The Geolocation service
+      // failed.", it means you probably did not give permission for the browser to
+      // locate you.
+      var pos;
+      var map, infoWindow;
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: -34.397, lng: 150.644},
+          zoom: 6
+        });
+        infoWindow = new google.maps.InfoWindow;
+
+        // Try HTML5 geolocation.
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+
+
+
+
+            infoWindow.setPosition(pos);
+            infoWindow.setContent('We found them!');
+            infoWindow.open(map);
+            map.setCenter(pos);
+          }, function() {
+            handleLocationError(true, infoWindow, map.getCenter());
+          });
+
+          
+        } else {
+          // Browser doesn't support Geolocation
+          handleLocationError(false, infoWindow, map.getCenter());
+        }
+      }
+
+      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(browserHasGeolocation ?
+                              'Error: The Geolocation service failed.' :
+                              'Error: Your browser doesn\'t support geolocation.');
+        infoWindow.open(map);
+      }
+
+      function sendData() {
+      	var lo = parseFloat($('#long').val());
+      	var la = parseFloat($('#lat').val());
+      	console.log(lo);
+      	console.log(la);
+      	console.log(pos.lng);
+      	console.log(pos.lat);
+      	var data = {
+      		lat: la,
+      		lng: lo
+      	};
+      	if (((Math.abs(data.lat-pos.lat))>20)&&((Math.abs(data.lng-pos.lng)>20)))
+      	{
+      		//send alert
+      		alert("Your child is lost");
+      		//style.display=none;
+
+      	}
+
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDG6tCuWNkUqhNNT2aatC_tgf80MmB9F3E&callback=initMap">
+    "text/javascript"></script>
+
+  <h2> Product of Melody, Charmaine, Anne, Anjali </h2>
+  <img src="redHeart.png", width=30, height 30>
+  </body>
+</html>
