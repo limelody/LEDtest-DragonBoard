@@ -1,2 +1,2 @@
 # StarterHacks2018
-Dragonboard stuff from instructables
+By Charmaine Koo, Anne Mei, Melody Li and Anjali Thatte
